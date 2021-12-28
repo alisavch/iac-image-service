@@ -1,0 +1,21 @@
+config:
+  aws:region: us-west-1
+  first-project:accessKeyID:
+    secure: AAABAIX6XdYuQFVymtUwY73Z2usDpX9Cexg+QxwyZrTe+cGr6KBJw/fFsNT3xCJhieZFvA==
+  first-project:dbName: conversion_compression_service
+  first-project:dbPassword:
+    secure: AAABAIkET3qXR+lw5CmKz5EuonPpUKhM5VOwBa7YV+5DfrT8M0ySOUs=
+  first-project:dbUsername: postgres
+  first-project:mqDefaultPassword:
+    secure: AAABAFPoCMdiErI4JaJcHSTg9CSu8yb5xTeikVVnRM9DnSSGUninh7092/Msrx4=
+  first-project:mqDefaultUser: ASRabbitmq
+  first-project:mqPassword:
+    secure: AAABAIbo67jjNwtAzQNkcgfSOtyWu6lM/ONBPyOeqfKp7ybjvdwAcz6TnNd85xY=
+  first-project:mqUsername: ASRabbitmq
+  first-project:region: us-west-1
+  first-project:remoteStorage: AWS
+  first-project:secretAccessKey:
+    secure: AAABAFOMywDXTJkGbugmTyVjxCcF4f7seRFL+zLyIswulqr7/C681VcExSeXzLUHpI7ukcbvckoKOLF+CnBel6J0wdsxGkfC
+  first-project:signingKey:
+    secure: AAABAMNbfRfJSbbF/GKfyiGX/CMwlUqdwSdHGWBN1a32eujQ6+10vbRB3V/Hz3GJza8ETAFRfENuEtQqXUdbcw==
+  first-project:tokenTTL: 24h
