@@ -8,8 +8,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// NewContainerAPI creates api container.
-func NewContainerAPI(conf Config, rds *rds.Instance, bucket *s3.Bucket, broker *mq.Broker, log *cloudwatch.LogGroup) pulumi.StringOutput {
+// NewAPIContainer creates api container.
+func NewAPIContainer(conf Config, rds *rds.Instance, bucket *s3.Bucket, broker *mq.Broker, log *cloudwatch.LogGroup) pulumi.StringOutput {
 	rabbitURL := broker.Instances.Index(pulumi.Int(0)).Endpoints().Index(pulumi.Int(0))
 
 	endpoint := split(rabbitURL)
@@ -104,8 +104,8 @@ func NewContainerAPI(conf Config, rds *rds.Instance, bucket *s3.Bucket, broker *
 	return containerDefinition
 }
 
-// NewContainerConsumer creates consumer container.
-func NewContainerConsumer(conf Config, rds *rds.Instance, bucket *s3.Bucket, broker *mq.Broker, log *cloudwatch.LogGroup) pulumi.StringOutput {
+// NewConsumerContainer creates consumer container.
+func NewConsumerContainer(conf Config, rds *rds.Instance, bucket *s3.Bucket, broker *mq.Broker, log *cloudwatch.LogGroup) pulumi.StringOutput {
 	rabbitURL := broker.Instances.Index(pulumi.Int(0)).Endpoints().Index(pulumi.Int(0))
 
 	endpoint := split(rabbitURL)

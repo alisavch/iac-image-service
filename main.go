@@ -79,7 +79,7 @@ func main() {
 			return err
 		}
 
-		containerDefinitionAPI := NewContainerAPI(config, database, bucket, broker, logAPI)
+		containerDefinitionAPI := NewAPIContainer(config, database, bucket, broker, logAPI)
 		taskDefinitionAPI, err := NewTask(ctx, "pulumi-task-api-as", taskExecRole, containerDefinitionAPI)
 		if err != nil {
 			return err
@@ -87,12 +87,12 @@ func main() {
 
 		api := NewAPI(config, cluster, taskDefinitionAPI, subnets, securityGroup, targetGroup, listener)
 
-		err = NewServiceAPI(ctx, "pulumi-api-svc-as", api)
+		err = NewAPIService(ctx, "pulumi-api-svc-as", api)
 		if err != nil {
 			return err
 		}
 
-		containerDefinitionConsumer := NewContainerConsumer(config, database, bucket, broker, logConsumer)
+		containerDefinitionConsumer := NewConsumerContainer(config, database, bucket, broker, logConsumer)
 		taskDefinitionConsumer, err := NewTask(ctx, "pulumi-task-consumer-as", taskExecRole, containerDefinitionConsumer)
 		if err != nil {
 			return err
@@ -100,7 +100,7 @@ func main() {
 
 		consumer := NewConsumer(cluster, taskDefinitionConsumer, subnets, securityGroup)
 
-		err = NewServiceConsumer(ctx, "pulumi-consumer-svc-as", consumer)
+		err = NewConsumerService(ctx, "pulumi-consumer-svc-as", consumer)
 		if err != nil {
 			return err
 		}

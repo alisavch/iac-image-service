@@ -23,8 +23,8 @@ func NewAPI(config Config, cluster *ecs.Cluster, task *ecs.TaskDefinition, subne
 	return API{Config: config, Cluster: cluster, Task: task, Subnets: subnets, SecurityGroup: securityGroup, TargetGroup: targetGroup, Listener: listener}
 }
 
-// NewServiceAPI creates a service.
-func NewServiceAPI(ctx *pulumi.Context, name string, service API) error {
+// NewAPIService creates a service.
+func NewAPIService(ctx *pulumi.Context, name string, service API) error {
 	_, err := ecs.NewService(ctx, name, &ecs.ServiceArgs{
 		Cluster:        service.Cluster.Arn,
 		DesiredCount:   pulumi.Int(1),
@@ -63,13 +63,19 @@ func NewConsumer(cluster *ecs.Cluster, task *ecs.TaskDefinition, subnets *ec2.Ge
 	return Consumer{Cluster: cluster, Task: task, Subnets: subnets, SecurityGroup: securityGroup}
 }
 
-// NewServiceConsumer creates a service.
-func NewServiceConsumer(ctx *pulumi.Context, name string, service Consumer) error {
+// NewConsumerService creates a service.
+func NewConsumerService(ctx *pulumi.Context, name string, service Consumer) error {
 	_, err := ecs.NewService(ctx, name, &ecs.ServiceArgs{
 		Cluster:        service.Cluster.Arn,
 		DesiredCount:   pulumi.Int(1),
 		LaunchType:     pulumi.String("FARGATE"),
 		TaskDefinition: service.Task.Arn,
+
+		NetworkConfiguration: &ecs.ServiceNetworkConfigurationArgs{
+			AssignPublicIp: pulumi.Bool(true),
+			Subnets:        pulumi.ToStringArray(service.Subnets.Ids),
+			SecurityGroups: pulumi.StringArray{service.SecurityGroup.ID().ToStringOutput()},
+		},
 	})
 	if err != nil {
 		return err

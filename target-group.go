@@ -13,6 +13,12 @@ func NewTargetGroup(ctx *pulumi.Context, name string, vpc *ec2.LookupVpcResult) 
 		Protocol:   pulumi.String("HTTP"),
 		TargetType: pulumi.String("ip"),
 		VpcId:      pulumi.String(vpc.Id),
+		HealthCheck: &lb.TargetGroupHealthCheckArgs{
+			Interval: pulumi.Int(15),
+			Matcher:  pulumi.String("200"),
+			Path:     pulumi.String("/api/health"),
+			Timeout:  pulumi.Int(5),
+		},
 	})
 	if err != nil {
 		return nil, err
