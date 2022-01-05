@@ -17,12 +17,6 @@ env:
 
 jobs:
   include:
-    - name: Login
-        uses: docker://pulumi/actions:v1.0.0
-        with:
-          args: login gs://xxx
-        env:
-          PULUMI_CREDENTIALS_PATH: /github/home/.pulumi
     - stage: pulumi-preview
       script: ./scripts/pulumi-preview.sh
       if: type = pull_request
