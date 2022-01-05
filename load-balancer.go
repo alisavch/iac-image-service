@@ -10,8 +10,7 @@ import (
 func NewLoadBalancer(ctx *pulumi.Context, name string, subnets *ec2.GetSubnetIdsResult, securityGroup *ec2.SecurityGroup) (*lb.LoadBalancer, error) {
 	loadBalancer, err := lb.NewLoadBalancer(ctx, name, &lb.LoadBalancerArgs{
 		Subnets:        pulumi.ToStringArray(subnets.Ids),
-		SecurityGroups: pulumi.StringArray{securityGroup.ID().ToStringOutput()},
-		Internal:       pulumi.Bool(false),
+		SecurityGroups: pulumi.StringArray{securityGroup.ID()},
 	})
 	if err != nil {
 		return nil, err
