@@ -26,15 +26,15 @@ func NewAPI(config Config, cluster *ecs.Cluster, task *ecs.TaskDefinition, subne
 // NewAPIService creates a service.
 func NewAPIService(ctx *pulumi.Context, name string, service API) error {
 	_, err := ecs.NewService(ctx, name, &ecs.ServiceArgs{
+		Tags:           pulumi.StringMap{"Name": pulumi.String("ecs-service-api-as")},
 		Cluster:        service.Cluster.Arn,
 		DesiredCount:   pulumi.Int(1),
 		LaunchType:     pulumi.String("FARGATE"),
 		TaskDefinition: service.Task.Arn,
-
 		NetworkConfiguration: &ecs.ServiceNetworkConfigurationArgs{
 			AssignPublicIp: pulumi.Bool(true),
 			Subnets:        pulumi.ToStringArray(service.Subnets.Ids),
-			SecurityGroups: pulumi.StringArray{service.SecurityGroup.ID().ToStringOutput()},
+			SecurityGroups: pulumi.StringArray{service.SecurityGroup.ID()},
 		},
 		LoadBalancers: ecs.ServiceLoadBalancerArray{
 			ecs.ServiceLoadBalancerArgs{
@@ -66,11 +66,11 @@ func NewConsumer(cluster *ecs.Cluster, task *ecs.TaskDefinition, subnets *ec2.Ge
 // NewConsumerService creates a service.
 func NewConsumerService(ctx *pulumi.Context, name string, service Consumer) error {
 	_, err := ecs.NewService(ctx, name, &ecs.ServiceArgs{
+		Tags:           pulumi.StringMap{"Name": pulumi.String(name)},
 		Cluster:        service.Cluster.Arn,
 		DesiredCount:   pulumi.Int(1),
 		LaunchType:     pulumi.String("FARGATE"),
 		TaskDefinition: service.Task.Arn,
-
 		NetworkConfiguration: &ecs.ServiceNetworkConfigurationArgs{
 			AssignPublicIp: pulumi.Bool(true),
 			Subnets:        pulumi.ToStringArray(service.Subnets.Ids),

@@ -1,0 +1,23 @@
+language: go
+os: linux
+go:
+  - 1.x
+branches:
+  only:
+    - main
+install:
+  - curl -fsSL https://get.pulumi.com/ | bash
+  - export PATH="$HOME/.pulumi/bin:$PATH"
+before_script:
+  - chmod +x ./scripts/*.sh
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: pulumi-preview
+      script: ./scripts/pulumi-preview.sh
+      if: type = pull_request
+    - stage: pulumi-up
+      script: ./scripts/run-pulumi.sh
+      if: type = push
