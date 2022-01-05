@@ -13,7 +13,7 @@ before_script:
 services:
   - docker
 env:
-  PULUMI_ACCESS_TOKEN: {PULUMI_ACCESS_TOKEN}
+  - PULUMI_ACCESS_TOKEN: ${PULUMI_ACCESS_TOKEN}
 
 jobs:
   include:
