@@ -2,9 +2,6 @@ language: go
 os: linux
 go:
   - 1.x
-branches:
-  only:
-    - main
 install:
   - curl -fsSL https://get.pulumi.com/ | bash
   - export PATH="$HOME/.pulumi/bin:$PATH"
