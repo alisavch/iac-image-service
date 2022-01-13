@@ -21,7 +21,5 @@ jobs:
   include:
     - stage: pulumi-preview
       script: ./scripts/pulumi-preview.sh
-      if: type = pull_request
     - stage: pulumi-up
       script: ./scripts/run-pulumi.sh
-      if: type = push
