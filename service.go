@@ -26,7 +26,7 @@ func NewAPI(config Config, cluster *ecs.Cluster, task *ecs.TaskDefinition, subne
 // NewAPIService creates a service.
 func NewAPIService(ctx *pulumi.Context, name string, service API) error {
 	_, err := ecs.NewService(ctx, name, &ecs.ServiceArgs{
-		Tags:           pulumi.StringMap{"Name": pulumi.String("ecs-service-api-as")},
+		Tags:           pulumi.StringMap{"Name": pulumi.String(name)},
 		Cluster:        service.Cluster.Arn,
 		DesiredCount:   pulumi.Int(1),
 		LaunchType:     pulumi.String("FARGATE"),
