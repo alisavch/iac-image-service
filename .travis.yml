@@ -12,10 +12,6 @@ before_script:
   - chmod +x ./scripts/*.sh
 services:
   - docker
-env:
-  - PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN
-  - ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-  - SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
 
 jobs:
   include:
@@ -24,4 +20,7 @@ jobs:
       if: type = pull_request
     - stage: pulumi-up
       script: ./scripts/run-pulumi.sh
+      access_key_id: $AWS_ACCESS_KEY_ID
+      secret_access_key: $AWS_SECRET_ACCESS_KEY
+      region: $AWS_REGION
       if: type = push
