@@ -2,9 +2,6 @@ language: go
 os: linux
 go:
   - 1.x
-branches:
-  only:
-    - main
 install:
   - curl -fsSL https://get.pulumi.com/ | bash
   - export PATH="$HOME/.pulumi/bin:$PATH"
@@ -17,10 +14,8 @@ jobs:
   include:
     - stage: pulumi-preview
       script: ./scripts/pulumi-preview.sh
-      if: type = pull_request
     - stage: pulumi-up
       script: ./scripts/run-pulumi.sh
       access_key_id: $AWS_ACCESS_KEY_ID
       secret_access_key: $AWS_SECRET_ACCESS_KEY
       region: $AWS_REGION
-      if: type = push
