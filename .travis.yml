@@ -10,6 +10,9 @@ before_script:
 services:
   - docker
 
+env:
+  - AAA=aaa
+
 jobs:
   include:
     - stage: pulumi-preview
